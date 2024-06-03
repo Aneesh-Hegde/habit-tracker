@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="body-wrapper">
+        <div class="home-page">
+            <div class="wrapper">
+                <div class="box physical-box">Physical</div>
+                <div class="box padai-box">Padai</div>
+                <div class="box mental-box">Mental</div>
+            </div>
+        </div>
+        <div class="physical top-page">
+            <button class="back-button">Back</button>
+        </div>
+        <div class="padai">
+            <button class="back-button">Back</button>
+            <a href="/padai"><button class="add-task">Add task</button></a>
+            <% try { %>
+                <% if (Array.isArray(padaiTask) && padaiTask.length > 0) { %>
+                    <% for (let task of padaiTask) { %>
+                        <div class="task-wrapper">
+                            <h3><%= task.task %></h3>
+                            <% if (task.type === "timer") { %>
+                                <h2>time left: <%= task.left %></h2>
+                            <% } %>
+                            <% if (task.type === "countdown") { %>
+                                <h2>count left: <%= task.left %></h2>
+                            <% } %>
+                            <form action="/padai/<%= task._id %>?_method=DELETE" method="post">
+                                <button type="submit">delete</button>
+                            </form>
+                        </div>
+                    <% } %>
+                <% } else { %>
+                    <p>No tasks available.</p>
+                <% } %>
+            <% } catch (error) { %>
+                <h1>Error: <%= error.message %></h1>
+            <% } %>
+        </div>
+        <div class="mental">
+            <button class="back-button">Back</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

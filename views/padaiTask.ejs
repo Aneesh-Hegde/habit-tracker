@@ -1,0 +1,13 @@
+
+<body>
+    
+    <form action="/padai" method="post">
+        <input type="text" name="padai[task]">
+        <select name="padai[type]" id="task-option">
+            <option value="timer">timer</option>
+            <option value="countdown">countdown</option>
+        </select>
+        <input type="number" placeholder="minutes/count goal" name="padai[target]">
+        <button type="submit">add task</button>
+    </form>
+</body>
