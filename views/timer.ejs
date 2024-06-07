@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="timer.css" />
+    <link rel="stylesheet" href="/timer.css">
   </head>
   <body>
     <div class="wrapper">
-      <div class="task">Chem</div>
-      <div class="target">Target:</div>
+      <div class="task-id"><%= task._id %></div>
+      <div class="task"><%= task.task %></div>
+      <div class="target">Target:<%= task.left %></div>
       <div class="outer-circle"></div>
       <div class="inner-circle">
         <div class="hour">00</div>
@@ -20,11 +21,10 @@
       </div>
       <div class="button-wrapper">
         <button class="start">Start</button>
-
         <button class="finish">Finish</button>
       </div>
     </div>
 
-    <script src="timer.js"></script>
+    <script src="/timer.js"></script>
   </body>
 </html>

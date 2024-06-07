@@ -27,7 +27,8 @@
                         <div class="task-wrapper">
                             <h3><%= task.task %></h3>
                             <% if (task.type === "timer") { %>
-                                <h2>time left: <%= task.left %></h2>
+                                <h2>time left: <%= task.left.toFixed(2) %></h2>
+                                   <a href="/timer/padai/<%= task._id %>"><button type="submit">do task</button></a> 
                             <% } %>
                             <% if (task.type === "countdown") { %>
                                 <h2>count left: <%= task.left %></h2>

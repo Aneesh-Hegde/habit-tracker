@@ -54,6 +54,29 @@ app.post("/padai", async(req, res) => {
     res.redirect("/");
 });
 
+app.get("/timer/padai/:id",async(req,res)=>{
+  let {id}=req.params;
+  let task=await Padai.findById(id);
+  console.log(task);
+  res.render("timer.ejs",{task})
+});
+
+app.post("/timer/padai/:id",async(req,res)=>{
+  const { id } = req.params;
+  const { time } = req.body;
+  const timeTomin=(parseInt(time))/60;
+  let task= await Padai.findById(id);
+  task.left=task.left-timeTomin;
+  await Padai.findByIdAndUpdate(id,task);
+  console.log(task);
+  console.log(`Time received for id ${id}:`, timeTomin);
+});
+
+app.delete("/padai/:id",async(req,res)=>{
+    const {id} =req.params;
+    await Padai.findByIdAndDelete(id);
+    res.redirect('/');
+})
 
 
 // const express = require("express");

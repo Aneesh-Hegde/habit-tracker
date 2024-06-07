@@ -3,6 +3,7 @@ let finishButton=document.querySelector('.finish');
 let hour=document.querySelector('.hour');
 let minute=document.querySelector('.minute');
 let second=document.querySelector('.seconds');
+let timeInput=document.querySelector('.time-input');
 
 //initializing essential variable
 let timerClock;
@@ -71,14 +72,14 @@ function timer(){
         second.innerHTML=secondValue.toString().padStart(2, '0');
         minute.innerHTML=minuteValue.innerHTML=minuteValue.toString().padStart(2, '0');
         hour.innerHTML=hourValue.toString().padStart(2, '0');
-        if(secondValue%60==0){
-            minuteValue+1;
+        if(secondValue==60){
+            minuteValue+=1;
             minute.innerHTML=minuteValue.toString().padStart(2, '0');
             second.innerHTML='00';
 
         }
-        if(parseInt(minute.innerHTML)%60==0 && parseInt(minute.innerHTML)>0){
-            hourValue+1;
+        if(parseInt(minute.innerHTML)==60){
+            hourValue+=1;
             hour.innerHTML=hourValue.toString().padStart(2, '0');
             minute.innerHTML='00';
             second.innerHTML='00';
@@ -116,19 +117,51 @@ startButton.addEventListener("click",()=>{
         timer();
     }
 });
-
+let time
 finishButton.addEventListener('click',()=>{
     if(startButton.innerHTML=='Continue'){
         clearInterval(breakClock);
         console.log(`hour:${hrsBeforeBreak},minute:${minBeforeBreak},second:${secBeforeBreak}`);
+        time=hrsBeforeBreak*3600+minBeforeBreak*60+secBeforeBreak;
+        // consle.log(time);
     }else{
         console.log(`hour:${hour.innerHTML},minute:${minute.innerHTML},second:${second.innerHTML}`)
         clearInterval(timerClock);
-        
+        time=parseInt(hour.innerHTML)*3600+parseInt(minute.innerHTML)*60+parseInt(second.innerHTML);
+        // consle.log(time);
     }
-    minute.innerHTML='00';
-        second.innerHTML='00';
-        hour.innerHTML='00';
+    
     
     startButton.innerHTML='Start';
+    const id = document.querySelector('.task-id').textContent.trim();
+        // Create URL-encoded data
+        const urlEncodedData = new URLSearchParams();
+        urlEncodedData.append('time', time);
+
+        // Send the data using fetch
+        fetch(`http://localhost:8080/timer/padai/${id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: urlEncodedData.toString()
+        })
+        .then(response => {
+          if (response.redirected) {
+            window.location.href = response.url;
+          } else {
+            return response.text();
+          }
+        })
+        .then(data => {
+          if (data) {
+            console.log('Success:', data);
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+        minute.innerHTML='00';
+    second.innerHTML='00';
+    hour.innerHTML='00';
 })
