@@ -77,7 +77,13 @@ main()
 
 // Route handlers
 app.get("/", async (req, res) => {
-    let user=await User.findById(req.session.user).populate("padai");
+    if (!req.session.user) {
+        return res.redirect("/login");
+    }
+    let user = await User.findById(req.session.user).populate("padai");
+    if (!user) {
+        return res.redirect("/login");
+    }
     let padaiTask = user.padai;
     res.render("index.ejs", { padaiTask });
 });
