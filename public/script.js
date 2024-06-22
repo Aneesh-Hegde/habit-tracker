@@ -53,4 +53,5 @@ const darkModeSaved = localStorage.getItem('darkMode');
 // If dark mode preference is true, enable dark mode
 if (darkModeSaved === 'true') {
     body.classList.add('dark-mode');
+    modeToggle.checked=true;
 }

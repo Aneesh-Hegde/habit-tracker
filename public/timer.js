@@ -4,6 +4,7 @@ let hour=document.querySelector('.hour');
 let minute=document.querySelector('.minute');
 let second=document.querySelector('.seconds');
 let timeInput=document.querySelector('.time-input');
+let semicircle=document.querySelectorAll('.semicircle');
 
 //initializing essential variable
 let timerClock;
@@ -49,6 +50,7 @@ function breakTime(){
                     second.innerHTML='59';
         
                 }
+
             }
         },1000)
 
@@ -60,6 +62,35 @@ function breakTime(){
     }
 
 
+    
+}
+
+
+let timerLoop;
+function countdown(){
+    const setTime=parseInt(second.innerHTML)*1000+parseInt(minute.innerHTML)*60000+parseInt(hour.innerHTML)*3600000;
+    const startTime=Date.now();
+    const futureTime=startTime+setTime;
+    timerLoop=setInterval(()=>{
+        const currentTime = Date.now();
+    const remainingTime = futureTime - currentTime;
+    const angle = (remainingTime / setTime) * 360;
+
+    if (angle > 180) {
+        semicircle[2].style.display = 'none';
+        semicircle[0].style.transform = 'rotate(180deg)';
+        semicircle[1].style.transform = `rotate(${angle}deg)`;
+    } else {
+        semicircle[2].style.display = 'block';
+        semicircle[0].style.transform = `rotate(${angle}deg)`;
+        semicircle[1].style.transform = `rotate(${angle}deg)`;
+    }
+
+    if (remainingTime <= 0) {
+        clearInterval(timerLoop);
+        clearBreak();
+    }
+    })
     
 }
 
@@ -100,7 +131,7 @@ startButton.addEventListener("click",()=>{
         hrsBeforeBreak=parseInt(hour.innerHTML);
         breakTiming=Math.floor((parseInt(second.innerHTML)+parseInt(minute.innerHTML)*60+parseInt(hour.innerHTML)*3600)/5);
         breakTime();
-
+        countdown();
     }
     else if(startButton.innerHTML=='Continue'){
         minute.innerHTML=`${minBeforeBreak}`;

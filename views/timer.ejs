@@ -11,14 +11,21 @@
       <div class="task-id"><%= task._id %></div>
       <div class="task"><%= task.task %></div>
       <div class="target">Target:<%= task.left %></div>
-      <div class="outer-circle"></div>
-      <div class="inner-circle">
-        <div class="hour">00</div>
-        <div>:</div>
-        <div class="minute">00</div>
-        <div>:</div>
-        <div class="seconds">00</div>
+      <div class="circle-container">
+        <div class="semicircle"></div>
+        <div class="semicircle"></div>
+        <div class="semicircle"></div>
+        
+          <div class="inner-circle">
+            <div class="hour">00</div>
+            <div>:</div>
+            <div class="minute">00</div>
+            <div>:</div>
+            <div class="seconds">00</div>
+          
+        </div>
       </div>
+      
       <div class="button-wrapper">
         <button class="start">Start</button>
         <button class="finish">Finish</button>
