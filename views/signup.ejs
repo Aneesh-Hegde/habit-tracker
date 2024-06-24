@@ -1,36 +1,28 @@
-<body>
-  <form action="/signup" method="post" novalidate class="needs-validation col-8 offset-2">
-    <div class="row">
-      <div>
-        <h3>Sign up now</h3>
-        <div class="mb-4">
-          <label for="username" class="form-label">Username:</label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            class="form-control"
-            required
-          />
-          <div class="invalid-feedback">Invalid username</div>
-        </div>
-      </div>
-      <div>
-        <div class="mb-4">
-          <label for="password" class="form-label">Password:</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            class="form-control"
-            required
-          />
-          <div class="invalid-feedback">Enter a password</div>
-
-        </div>
-      </div>
-      
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="./style_form.css">
+</head>
+  <body>
+    <div class="container">
+        <form action="/signup" method="post" novalidate class="needs-validation">
+            <h3>Sign up now</h3>
+            <div class="form-group">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" name="username" id="username" class="form-control" required />
+                <div class="invalid-feedback">Invalid username</div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" name="password" id="password" class="form-control" required />
+                <div class="invalid-feedback">Enter a password</div>
+            </div>
+            <button type="submit" class="btn btn-submit">Submit</button>
+        </form>
     </div>
-    <button type="submit" class="btn btn-dark">Submit</button>
-  </form>
+     <script src="script_form.js"></script>
 </body>
+</html>
