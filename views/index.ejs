@@ -30,8 +30,9 @@
             <% try { %>
                 <% if (Array.isArray(padaiTask) && padaiTask.length > 0) { %>
                     <% for (let task of padaiTask) { %>
+                        <% if (task.left >0) { %>
                         <div class="task-wrapper">
-                            <% if (task.left >0) { %>
+                            
                             <h3><%= task.task %></h3>
                             <% if (task.type === "timer") { %>
                                 
@@ -45,8 +46,9 @@
                             <form action="/padai/<%= task._id %>?_method=DELETE" method="post">
                                 <button type="submit">delete</button>
                             </form>
-                            <% } %>
+                            
                         </div>
+                        <% } %>
                     <% } %>
                 <% } else { %>
                     <p>No tasks available.</p>
