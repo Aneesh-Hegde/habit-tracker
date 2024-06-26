@@ -18,7 +18,7 @@ const session = require("express-session");
 
 
 app.listen(8080, () => {
-    console.log("app is listening on port 808");
+    console.log("app is listening on port 8081");
 });
 
 app.set("views", path.join(__dirname, "views"));
@@ -119,9 +119,11 @@ app.post("/timer/padai/:id",async(req,res)=>{
   let task= await Padai.findById(id);
   task.left=task.left-timeTomin;
   if(task.left<=0) {task.left=0;}
-  await Padai.findByIdAndUpdate(id,task);
+  console.log(task.left);
+  await Padai.findByIdAndUpdate(id,{ left: task.left });
   console.log(task);
   console.log(`Time received for id ${id}:`, timeTomin);
+  res.redirect("/");
 });
 
 app.delete("/padai/:id",async(req,res)=>{
