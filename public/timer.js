@@ -38,13 +38,13 @@ function breakTime(){
                 minute.innerHTML=minuteValue.innerHTML=minuteValue.toString().padStart(2, '0');
                 hour.innerHTML=hourValue.toString().padStart(2, '0');
                 if(secondValue==0 && parseInt(minute.innerHTML)>0){
-                    minuteValue-1;
+                    minuteValue-=1;
                     minute.innerHTML=minuteValue.innerHTML=minuteValue.toString().padStart(2, '0');
                     second.innerHTML='59';
         
                 }
                 if(parseInt(minute.innerHTML)==0 && parseInt(hour.innerHTML)>0){
-                    hourValue-1;
+                    hourValue-=1;
                     hour.innerHTML=hourValue.toString().padStart(2, '0');
                     minute.innerHTML='59';
                     second.innerHTML='59';
@@ -138,6 +138,11 @@ startButton.addEventListener("click",()=>{
         second.innerHTML=`${secBeforeBreak}`;
         hour.innerHTML=`${hrsBeforeBreak}`;
         startButton.innerHTML='Pause';
+        semicircle[2].style.display = 'block';
+        semicircle[0].style.transform = `rotate(0deg)`;
+        semicircle[1].style.transform = `rotate(0deg)`;
+        clearInterval(timerLoop);
+        clearInterval(breakClock);
         timer();
     }
     else {
