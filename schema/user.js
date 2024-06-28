@@ -8,6 +8,20 @@ const userSchema=new mongoose.Schema({
         }
         ]
     },
+    physical:{
+        type:[{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Physical",
+        }
+        ]
+    },
+    mental:{
+        type:[{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Mental",
+        }
+        ]
+    },
 });
 
 userSchema.plugin(passportLocalMongoose);

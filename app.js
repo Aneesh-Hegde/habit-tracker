@@ -8,6 +8,8 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const bodyParser = require('body-parser');
 const Padai = require("./schema/padaiSchema");
+const Physical = require("./schema/physicalSchema");
+const Mental = require("./schema/mentalSchema");
 const User = require("./schema/user");
 const passport = require("passport");
 const LocalStratergy = require("passport-local");
@@ -80,12 +82,14 @@ app.get("/", async (req, res) => {
     if (!req.session.user) {
         return res.redirect("/login");
     }
-    let user = await User.findById(req.session.user).populate("padai");
+    let user = await User.findById(req.session.user).populate("padai").populate("physical").populate("mental");
     if (!user) {
         return res.redirect("/login");
     }
     let padaiTask = user.padai;
-    res.render("index.ejs", { padaiTask });
+    let physicalTask = user.physical;
+    let mentalTask = user.mental;
+    res.render("index.ejs", { padaiTask,physicalTask,mentalTask });
 });
 
 app.get("/padai", (req, res) => {
@@ -129,6 +133,98 @@ app.post("/timer/padai/:id",async(req,res)=>{
 app.delete("/padai/:id",async(req,res)=>{
     const {id} =req.params;
     await Padai.findByIdAndDelete(id);
+    res.redirect('/');
+});
+
+
+//physical
+app.get("/physical", (req, res) => {
+    res.render("physicalTask.ejs");
+});
+
+app.post("/physical", async(req, res) => {
+    let data=req.body.physical;
+    data.left=data.target;
+    console.log(data);
+    let newTask=new Physical(data);
+    console.log(newTask);
+    await newTask.save();
+    let user=await User.findById(req.session.user);
+    user.physical.push(newTask);
+    await User.findByIdAndUpdate(req.session.user,user)
+    res.redirect("/");
+});
+
+app.get("/timer/physical/:id",async(req,res)=>{
+  let {id}=req.params;
+  let task=await Physical.findById(id);
+  console.log(task);
+  res.render("timer.ejs",{task})
+});
+
+app.post("/timer/physical/:id",async(req,res)=>{
+  const { id } = req.params;
+  const { time } = req.body;
+  const timeTomin=(parseInt(time))/60;
+  let task= await Physical.findById(id);
+  task.left=task.left-timeTomin;
+  if(task.left<=0) {task.left=0;}
+  console.log(task.left);
+  await Physical.findByIdAndUpdate(id,{ left: task.left });
+  console.log(task);
+  console.log(`Time received for id ${id}:`, timeTomin);
+  res.redirect("/");
+});
+
+app.delete("/physical/:id",async(req,res)=>{
+    const {id} =req.params;
+    await Physical.findByIdAndDelete(id);
+    res.redirect('/');
+})
+
+//mental
+
+app.get("/mental", (req, res) => {
+    res.render("mentalTask.ejs");
+});
+
+app.post("/mental", async(req, res) => {
+    let data=req.body.mental;
+    data.left=data.target;
+    console.log(data);
+    let newTask=new Mental(data);
+    console.log(newTask);
+    await newTask.save();
+    let user=await User.findById(req.session.user);
+    user.mental.push(newTask);
+    await User.findByIdAndUpdate(req.session.user,user)
+    res.redirect("/");
+});
+
+app.get("/timer/mental/:id",async(req,res)=>{
+  let {id}=req.params;
+  let task=await Mental.findById(id);
+  console.log(task);
+  res.render("timer.ejs",{task})
+});
+
+app.post("/timer/mental/:id",async(req,res)=>{
+  const { id } = req.params;
+  const { time } = req.body;
+  const timeTomin=(parseInt(time))/60;
+  let task= await Mental.findById(id);
+  task.left=task.left-timeTomin;
+  if(task.left<=0) {task.left=0;}
+  console.log(task.left);
+  await Mental.findByIdAndUpdate(id,{ left: task.left });
+  console.log(task);
+  console.log(`Time received for id ${id}:`, timeTomin);
+  res.redirect("/");
+});
+
+app.delete("/mental/:id",async(req,res)=>{
+    const {id} =req.params;
+    await Mental.findByIdAndDelete(id);
     res.redirect('/');
 })
 

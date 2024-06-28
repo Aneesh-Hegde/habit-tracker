@@ -175,7 +175,8 @@ finishButton.addEventListener('click',()=>{
         urlEncodedData.append('time', time);
 
         // Send the data using fetch
-        fetch(`http://localhost:8080/timer/padai/${id}`, {
+        const route=window.location.pathname.split('/')[2];
+        fetch(`http://localhost:8080/timer/${route}/${id}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
