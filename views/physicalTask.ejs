@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <div class="container">
+        <form action="/physical" method="post" class="task-form">
+            <h3>Add New Task</h3>
+            <div class="form-group">
+                <label for="task" class="form-label">Task:</label>
+                <input type="text" name="physical[task]" id="task" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="task-option" class="form-label">Type:</label>
+                <select name="physical[type]" id="task-option" class="form-control">
+                    <option value="timer">Timer</option>
+                    <option value="countdown">Countdown</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="target" class="form-label">Target (minutes/count goal):</label>
+                <input type="number" name="physical[target]" id="target" class="form-control" placeholder="minutes/count goal" required>
+            </div>
+            <button type="submit" class="btn btn-submit">Add Task</button>
+        </form>
+    </div>
+
+</body>
+</html>
+
+
