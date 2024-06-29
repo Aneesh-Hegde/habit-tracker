@@ -44,29 +44,28 @@
 .box {
     width: 8rem;
     height: 8rem;
-    background:linear-gradient(120deg, #7b92ea 0%, #87addc 100%);
-;
+    background-color: beige;
 
     border-radius: 8px; /* Rounded corners */
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: rgb(0, 0, 0);
     font-size: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Initial subtle shadow */
+    box-shadow:0 2px 4px rgba(0, 0, 0, 0.2); /* Initial subtle shadow */
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for transform and box-shadow */
 }
 
 /* Box Hover State */
 .box:hover {
     transform: translateY(-10px); /* Move the box upwards for pop-out effect */
-    box-shadow: -10px 10px 20px #819ecd ; /* White box shadow on hover */
+    box-shadow: -10px 10px 20px #97D5A0; /* White box shadow on hover */
 }
 
 /* Background Sections */
 .physical {
     position: absolute;
-    background:linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%); /* Purple primary color */
+    background: linear-gradient(135deg, #e6e6fa, #d8bfd8); /* Purple primary color */
     height: 100vh;
     width: 100%;
     transition: all ease 1s;
@@ -75,7 +74,7 @@
 .padai {
     position: absolute;
     top: 0;
-    background: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%); /* Blue accent color */
+    background: linear-gradient(135deg, #e6e6fa, #d8bfd8); /* Blue accent color */
     height: 100vh;
     width: 100%;
     transition: all ease 1s;
@@ -84,7 +83,7 @@
 .mental {
     position: absolute;
     background: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%); /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #f8f8da, #89a7ab); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(135deg, #e6e6fa, #d8bfd8); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #f8f8da, #89a7ab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     height: 100vh;
     width: 100%;
@@ -98,19 +97,21 @@
     justify-content: center;
     width: 10rem;
     height: 3rem;
-    background:linear-gradient(120deg, #f6d365 0%, #fda085 100%); /* Purple primary color */
-    color: white;
+    background-color: #cdc8e0;
+    color: black;
     border: none;
-    border-radius: 1.5rem; /* Makes the button pill-shaped */
+    border-radius: 1.5rem;
     cursor: pointer;
     font-size: 1rem;
+    border: 1px solid rgb(0, 0, 0, 0.5);
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slight elevation */
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
     transition: background-color 0.3s ease;
 }
 
 .back-button:hover {
     background-color: #6A2BA6; /* Darker shade of purple */
+    color: #fff;
 }
 
 /* Icon Styling */
@@ -137,12 +138,12 @@ body.dark-mode {
 }
 
 .dark-mode .home-page {
-    background: linear-gradient(120deg, #b38b3a 0%, #bf7847 100%); 
+    background: linear-gradient(135deg, #000, #4e085f);
 }
 
 .dark-mode .box {
-    background:linear-gradient(120deg, #547083 0%, #415174 100%);
-
+    background-color: #800080;
+    color: white;
 }
 
 .dark-mode .box:hover {
@@ -150,15 +151,18 @@ body.dark-mode {
 }
 
 .dark-mode .physical {
-    background: linear-gradient(120deg, #43856a 0%, #3b7758 100%);
+    background: linear-gradient(135deg, #000033, #4b0082);
+
 }
 
 .dark-mode .padai {
-    background: linear-gradient(120deg, #43856a 0%, #3b7758 100%);;
+    background: linear-gradient(135deg, #000033, #4b0082);
+
 }
 
 .dark-mode .mental {
-    background: linear-gradient(120deg, #43856a 0%, #3b7758 100%);;
+    background: linear-gradient(135deg, #000033, #4b0082);
+
 }
 
 .dark-mode .back-button {
@@ -166,7 +170,7 @@ body.dark-mode {
 }
 
 .dark-mode .back-button:hover {
-    background-color:linear-gradient(120deg, #b38b3a 0%, #bf7847 100%);
+    background-color: #1e1e1e;
 }
 
 /* Toggle Button Styling */
@@ -247,35 +251,85 @@ body.dark-mode {
     background-color: #218838;
 }
 
+
+
 .task-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 550px;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #F3EDF9; /* Replace this with the background color code */
+    border: 1px solid #DADADA; /* Optional: Change the border color if needed */
+    border-radius: 5px;
+    height: 270px;
+    
+    /* border: 1px solid #ddd;
+    border-radius: 8px; */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-wrapper .cont-1{
+    height: 54%;
+    width: 100%;
+    text-align: center;
+}
+
+.task-wrapper .cont-2{
+    margin-top: 24px;
+    width: 75%;
+    justify-content: space-around;
+    height: 25%;
+    display: flex;
+    flex-direction: row;
+}
+
+.cont-2 button{
+    scale: 1.25;
+}
+
+.dark-mode .task-wrapper {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    max-width: 600px;
+    max-width: 550px;
     padding: 15px;
     margin-bottom: 10px;
-    background-color: #fff;
+    background-color: #d4bfff;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 270px;
+}
+
+.dark-mode .task-wrapper .cont-2{
+    margin-top: 24px;
+    width: 100%;
+    justify-content: space-around;
+    height: 25%;
+    display: flex;
+    flex-direction: row;
 }
 
 .task-wrapper h3 {
-    margin: 0 0 10px;
+    margin-top: 29px;
+    text-transform: capitalize;
     font-size: 20px;
     color: #333;
 }
 
 .task-wrapper h2 {
-    margin: 0 0 10px;
+    margin-top: 13px;
     font-size: 18px;
     color: #666;
 }
 
-.task-wrapper button {
+.do-task  {
     padding: 8px 15px;
-    background-color: #dc3545;
+    background-color: #1344b8;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -283,7 +337,21 @@ body.dark-mode {
     font-size: 14px;
 }
 
-.task-wrapper button:hover {
+.delete  {
+    padding: 8px 15px;
+    background-color:  #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.do-task:hover {
+    background-color: #103a9c;
+}
+.delete:hover {
     background-color: #c82333;
 }
+
 

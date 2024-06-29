@@ -29,20 +29,28 @@
                     <% for (let task of physicalTask) { %>
                         <% if (task.left >0) { %>
                         <div class="task-wrapper">
-                            
-                            <h3><%= task.task %></h3>
-                            <% if (task.type === "timer") { %>
+                            <div class="cont-1">
+                                <h3><%= task.task %></h3>
+                                <% if (task.type === "timer") { %>
                                 
                                     <h2>time left: <%= task.left.toFixed(2) %></h2>
-                                    <a href="/timer/physical/<%= task._id %>"><button type="submit">Do Task</button></a> 
                                    
                             <% } %>
                             <% if (task.type === "countdown") { %>
                                 <h2>count left: <%= task.left %></h2>
                             <% } %>
-                            <form action="/physical/<%= task._id %>?_method=DELETE" method="post">
-                                <button type="submit">delete</button>
-                            </form>
+                            </div>
+                            <div class="cont-2">
+                                <% if (task.type === "timer") { %>
+                                
+                                    <a href="/timer/physical/<%= task._id %>"><button type="submit" class="do-task">Do Task</button></a> 
+                                   
+                            <% } %>
+                                <form action="/physical/<%= task._id %>?_method=DELETE" method="post">
+                                    <button type="submit" class="delete">delete</button>
+                                </form>
+                            </div>
+                            
                             
                         </div>
                         <% } %>
@@ -60,20 +68,28 @@
                     <% for (let task of padaiTask) { %>
                         <% if (task.left >0) { %>
                         <div class="task-wrapper">
-                            
-                            <h3><%= task.task %></h3>
-                            <% if (task.type === "timer") { %>
+                            <div class="cont-1">
+                                <h3><%= task.task %></h3>
+                                <% if (task.type === "timer") { %>
                                 
                                     <h2>time left: <%= task.left.toFixed(2) %></h2>
-                                    <a href="/timer/padai/<%= task._id %>"><button type="submit">Do Task</button></a> 
+                                    
                                    
                             <% } %>
                             <% if (task.type === "countdown") { %>
                                 <h2>count left: <%= task.left %></h2>
                             <% } %>
-                            <form action="/padai/<%= task._id %>?_method=DELETE" method="post">
-                                <button type="submit">delete</button>
-                            </form>
+                            </div>
+                            <div class="cont-2">
+                                <% if (task.type === "timer") { %>
+                                
+                                    <a href="/timer/padai/<%= task._id %>"><button type="submit" class="do-task">Do Task</button></a> 
+                                   
+                            <% } %>
+                                <form action="/padai/<%= task._id %>?_method=DELETE" method="post">
+                                    <button type="submit" class="delete">delete</button>
+                                </form>
+                            </div>
                             
                         </div>
                         <% } %>
@@ -92,19 +108,28 @@
                         <% if (task.left >0) { %>
                         <div class="task-wrapper">
                             
-                            <h3><%= task.task %></h3>
-                            <% if (task.type === "timer") { %>
+                            <div class="cont-1">
+                                <h3><%= task.task %></h3>
+                                <% if (task.type === "timer") { %>
                                 
                                     <h2>time left: <%= task.left.toFixed(2) %></h2>
-                                    <a href="/timer/mental/<%= task._id %>"><button type="submit">Do Task</button></a> 
                                    
                             <% } %>
                             <% if (task.type === "countdown") { %>
                                 <h2>count left: <%= task.left %></h2>
                             <% } %>
-                            <form action="/mental/<%= task._id %>?_method=DELETE" method="post">
-                                <button type="submit">delete</button>
-                            </form>
+                            </div>
+                            <div class="cont-2">
+                                <% if (task.type === "timer") { %>
+                                
+                                    
+                                    <a href="/timer/mental/<%= task._id %>"><button type="submit" class="do-task">Do Task</button></a> 
+                                   
+                            <% } %>
+                                <form action="/mental/<%= task._id %>?_method=DELETE" method="post">
+                                    <button type="submit" class="delete">delete</button>
+                                </form>
+                            </div>
                             
                         </div>
                         <% } %>
