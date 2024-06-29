@@ -46,7 +46,7 @@ const store=MongoStore.create({
 //express session
 const sessionOptions = {
     store,
-    secret: process.env.SECRET,
+    secret: "kuchbbgbyhi",
     resave: false,
     saveUninitialized: true,
     cookie:{
