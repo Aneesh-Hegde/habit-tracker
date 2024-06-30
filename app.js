@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //session parameter
 const store=MongoStore.create({
-    mongoUrl: "mongodb://127.0.0.1:27017/habittracker",
+    mongoUrl: process.env.ATLASDB_URL,
     crypto: {
       secret: process.env.SECRET,
     },
