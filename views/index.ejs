@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task List</title>
+    <title>Abbhyasa</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSILsqh4hPGyd3zsf02kdD7M25FD1bIH6cudg&s" type="image/x-icon">
 </head>
 <body>
     <div class="body-wrapper">
@@ -41,11 +42,7 @@
                         <div class="task-wrapper">
                             <div class="cont-1">
                                 <h3><%= task.task %></h3>
-                                <% if (task.type === "timer") { %>
-                                
-                                    <h2>time left: <%= task.left.toFixed(2) %></h2>
-                                   
-                            <% } %>
+                                <h2>time left: <%= task.left.toFixed(2) %></h2>
                           
                             </div>
                             <div class="cont-2">
@@ -80,12 +77,7 @@
                         <div class="task-wrapper">
                             <div class="cont-1">
                                 <h3><%= task.task %></h3>
-                                <% if (task.type === "timer") { %>
-                                
-                                    <h2>time left: <%= task.left.toFixed(2) %></h2>
-                                    
-                                   
-                            <% } %>
+                                <h2>time left: <%= task.left.toFixed(2) %></h2>
                           
                             </div>
                             <div class="cont-2">
@@ -120,11 +112,7 @@
                             
                             <div class="cont-1">
                                 <h3><%= task.task %></h3>
-                                <% if (task.type === "timer") { %>
-                                
-                                    <h2>time left: <%= task.left.toFixed(2) %></h2>
-                                   
-                            <% } %>
+                                <h2>time left: <%= task.left.toFixed(2) %></h2>
                           
                             </div>
                             <div class="cont-2">
