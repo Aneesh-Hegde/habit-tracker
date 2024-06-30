@@ -68,7 +68,7 @@ passport.deserializeUser(User.deserializeUser());
 
 // Connect to MongoDB
 async function main() {
-    await mongoose.connect(ATLASDB_URL);
+    await mongoose.connect(process.env.ATLASDB_URL);
 }
 
 main()
