@@ -68,7 +68,7 @@ passport.deserializeUser(User.deserializeUser());
 
 // Connect to MongoDB
 async function main() {
-    await mongoose.connect("mongodb://127.0.0.1:27017/habittracker");
+    await mongoose.connect(ATLASDB_URL);
 }
 
 main()
