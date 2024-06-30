@@ -16,13 +16,23 @@
                 </div>
             </div>
             <div class="wrapper">
-                <div class="box physical-box">Physical</div>
+                <div class="left">
+                    <div class="box physical-box">Physical</div>
                 <div class="box padai-box">Padai</div>
                 <div class="box mental-box">Mental</div>
+                </div>
+                <div class="charts">
+                        <canvas id="myChart"></canvas>
+                      </div>
+                
+                
             </div>
         </div>
         <div class="physical top-page">
-            <button class="back-button">Back</button>
+            <div class="back-button-div">
+                <button class="back-button">Back</button>
+            </div>
+            
             <a href="/physical"><button class="add-task">Add task</button></a>
             <% try { %>
                 <% if (Array.isArray(physicalTask) && physicalTask.length > 0) { %>
@@ -36,16 +46,14 @@
                                     <h2>time left: <%= task.left.toFixed(2) %></h2>
                                    
                             <% } %>
-                            <% if (task.type === "countdown") { %>
-                                <h2>count left: <%= task.left %></h2>
-                            <% } %>
+                          
                             </div>
                             <div class="cont-2">
-                                <% if (task.type === "timer") { %>
+                                
                                 
                                     <a href="/timer/physical/<%= task._id %>"><button type="submit" class="do-task">Do Task</button></a> 
                                    
-                            <% } %>
+                            
                                 <form action="/physical/<%= task._id %>?_method=DELETE" method="post">
                                     <button type="submit" class="delete">delete</button>
                                 </form>
@@ -61,7 +69,9 @@
             <% } %>
         </div>
         <div class="padai">
-            <button class="back-button">Back</button>
+            <div class="back-button-div">
+                <button class="back-button">Back</button>
+            </div>
             <a href="/padai"><button class="add-task">Add task</button></a>
             <% try { %>
                 <% if (Array.isArray(padaiTask) && padaiTask.length > 0) { %>
@@ -76,16 +86,14 @@
                                     
                                    
                             <% } %>
-                            <% if (task.type === "countdown") { %>
-                                <h2>count left: <%= task.left %></h2>
-                            <% } %>
+                          
                             </div>
                             <div class="cont-2">
-                                <% if (task.type === "timer") { %>
+
                                 
                                     <a href="/timer/padai/<%= task._id %>"><button type="submit" class="do-task">Do Task</button></a> 
                                    
-                            <% } %>
+
                                 <form action="/padai/<%= task._id %>?_method=DELETE" method="post">
                                     <button type="submit" class="delete">delete</button>
                                 </form>
@@ -100,7 +108,9 @@
             <% } %>
         </div>
         <div class="mental">
-            <button class="back-button">Back</button>
+            <div class="back-button-div">
+                <button class="back-button">Back</button>
+            </div>
             <a href="/mental"><button class="add-task">Add task</button></a>
             <% try { %>
                 <% if (Array.isArray(mentalTask) && mentalTask.length > 0) { %>
@@ -115,17 +125,10 @@
                                     <h2>time left: <%= task.left.toFixed(2) %></h2>
                                    
                             <% } %>
-                            <% if (task.type === "countdown") { %>
-                                <h2>count left: <%= task.left %></h2>
-                            <% } %>
+                          
                             </div>
                             <div class="cont-2">
-                                <% if (task.type === "timer") { %>
-                                
-                                    
-                                    <a href="/timer/mental/<%= task._id %>"><button type="submit" class="do-task">Do Task</button></a> 
-                                   
-                            <% } %>
+                                <a href="/timer/mental/<%= task._id %>"><button type="submit" class="do-task">Do Task</button></a> 
                                 <form action="/mental/<%= task._id %>?_method=DELETE" method="post">
                                     <button type="submit" class="delete">delete</button>
                                 </form>
@@ -139,7 +142,52 @@
                 <h1>Error: <%= error.message %></h1>
             <% } %>
         </div>
+        
+          
+         
     </div>
+    
+    
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          
+    <script>
+        const datesOnly = <%- JSON.stringify(datesOnly) %>;
+        const timeWorked = <%- JSON.stringify(timeWorked) %>;
+      const ctx = document.getElementById('myChart');
+    
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: datesOnly,
+          datasets: [{
+            label: 'Graph',
+            data: timeWorked,
+            borderWidth: 1
+          }]
+        },
+        options: {
+            plugins: {
+        // changin the lagend colour
+        legend: {
+            labels: {
+                color: "grey",
+            },
+        },
+    },
+          scales: {
+            y: {
+              ticks: { color: "grey", beginAtZero: true },
+
+            },
+            x: {
+              ticks: { color: "grey", beginAtZero: true },
+
+            }
+          }
+          
+        }
+      });
+    </script>
 </body>
 </html>

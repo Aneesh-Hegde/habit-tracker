@@ -33,11 +33,29 @@
 /* Sidebar Wrapper */
 .wrapper {
     display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+.left{
+    display: flex;
     flex-direction: column;
     height: 100vh;
     width: 20%;
     justify-content: space-around;
     align-items: center;
+}
+
+.charts{
+    width: 80rem;
+    height: 80rem;
+    align-items: center;
+    display: flex;
+}
+#myChart{
+    padding-right: 5rem;
 }
 
 /* Box Elements within the Sidebar */
@@ -61,7 +79,9 @@
     transform: translateY(-10px); /* Move the box upwards for pop-out effect */
     box-shadow: -10px 10px 20px #97D5A0; /* White box shadow on hover */
 }
-
+.toleft{
+    transform: translateX(-100%);
+}
 /* Background Sections */
 .physical {
     position: absolute;
@@ -69,6 +89,7 @@
     height: 100vh;
     width: 100%;
     transition: all ease 1s;
+    overflow: scroll;
 }
 
 .padai {
@@ -78,6 +99,8 @@
     height: 100vh;
     width: 100%;
     transition: all ease 1s;
+    overflow: scroll;
+
 }
 
 .mental {
@@ -89,7 +112,12 @@
     width: 100%;
     transition: all ease 1s;
 }
+.back-button-div{
+    height: 5rem;
+    width: 100%;
+    margin-bottom: 1rem;
 
+}
 /* Back Button Styling */
 .back-button {
     display: inline-flex;
@@ -167,6 +195,7 @@ body.dark-mode {
 
 .dark-mode .back-button {
     background-color: #2e2e2e;
+    color: white;
 }
 
 .dark-mode .back-button:hover {

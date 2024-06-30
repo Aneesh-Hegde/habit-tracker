@@ -46,7 +46,7 @@ const store=MongoStore.create({
 //express session
 const sessionOptions = {
     store,
-    secret: "kuchbbgbyhi",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie:{
@@ -89,7 +89,58 @@ app.get("/", async (req, res) => {
     let padaiTask = user.padai;
     let physicalTask = user.physical;
     let mentalTask = user.mental;
-    res.render("index.ejs", { padaiTask,physicalTask,mentalTask });
+    
+    let dataArray = user.hourTask;
+// Get the current date
+let now = new Date();
+
+// Calculate the start date (30 days ago from the current date)
+let startDate = new Date();
+startDate.setDate(now.getDate() - 30);
+
+// End date is the current date
+let endDate = now;
+
+function groupDatesInRange(dataArray, startDate, endDate) {
+  let groupedDates = {};
+
+  dataArray.forEach(item => {
+    let date = new Date(item.date); // Ensure the date is a Date object
+    if (date >= startDate && date <= endDate) {
+      let dateString = date.toISOString().split('T')[0];
+      if (!groupedDates[dateString]) {
+        groupedDates[dateString] = [];
+      }
+      groupedDates[dateString].push(item);
+    }
+  });
+
+  // Ensure each date in the range has at least an empty array
+  for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+    let dateString = d.toISOString().split('T')[0];
+    if (!groupedDates[dateString]) {
+      groupedDates[dateString] = [];
+    }
+  }
+
+  // Convert the grouped dates object into an array of arrays
+  return Object.entries(groupedDates).sort((a, b) => new Date(a[0]) - new Date(b[0]));
+}
+
+// Group the dates within the range
+let datesInRange = groupDatesInRange(dataArray, startDate, endDate);
+// console.log("Grouped dates within the range:", datesInRange);
+// console.log("----------------------")
+let datesOnly = datesInRange.map(entry => entry[0]);
+let timeWorked = [];
+for (let i = 0; i < datesInRange.length; i++) {
+    console.log(datesInRange[i]);
+  let timedone = 0;
+  datesInRange[i][1].forEach(item => timedone += item.time);
+  timeWorked.push(timedone);
+}
+console.log(timeWorked);
+    res.render("index.ejs", { padaiTask,physicalTask,mentalTask,timeWorked,datesOnly });
 });
 
 app.get("/padai", (req, res) => {
@@ -121,6 +172,10 @@ app.post("/timer/padai/:id",async(req,res)=>{
   const { time } = req.body;
   const timeTomin=(parseInt(time))/60;
   let task= await Padai.findById(id);
+  let user = await User.findById(req.session.user);
+    user.hourTask.push({id:id,time:timeTomin,date:new Date()})
+    await User.findByIdAndUpdate(req.session.user,user);
+    console.log(user.hourTask);
   task.left=task.left-timeTomin;
   if(task.left<=0) {task.left=0;}
   console.log(task.left);
@@ -167,6 +222,10 @@ app.post("/timer/physical/:id",async(req,res)=>{
   const { time } = req.body;
   const timeTomin=(parseInt(time))/60;
   let task= await Physical.findById(id);
+  let user = await User.findById(req.session.user);
+    user.hourTask.push({id:id,time:timeTomin,date:new Date()})
+    await User.findByIdAndUpdate(req.session.user,user);
+    console.log(user.hourTask);
   task.left=task.left-timeTomin;
   if(task.left<=0) {task.left=0;}
   console.log(task.left);
@@ -213,6 +272,10 @@ app.post("/timer/mental/:id",async(req,res)=>{
   const { time } = req.body;
   const timeTomin=(parseInt(time))/60;
   let task= await Mental.findById(id);
+  let user = await User.findById(req.session.user);
+    user.hourTask.push({id:id,time:timeTomin,date:new Date()})
+    await User.findByIdAndUpdate(req.session.user,user);
+    console.log(user.hourTask);
   task.left=task.left-timeTomin;
   if(task.left<=0) {task.left=0;}
   console.log(task.left);
@@ -249,6 +312,7 @@ app.post("/signup",async(req,res)=>{
         let  {username,password}=req.body;
         let newUser=new User({username,password});
         let registeredUser=await User.register(newUser,password);
+        req.session.user=newUser._id;
         console.log(registeredUser);
         res.redirect("/");
     }catch(err){

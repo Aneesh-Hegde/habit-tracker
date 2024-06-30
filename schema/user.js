@@ -22,6 +22,24 @@ const userSchema=new mongoose.Schema({
         }
         ]
     },
+    hourTask:[{
+        id:[{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Mental",
+        },{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Physical",
+        },{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Padai",
+        }],
+        time:{
+            type:Number,
+        },
+        date:{
+            type:Date,
+        }
+    }]
 });
 
 userSchema.plugin(passportLocalMongoose);

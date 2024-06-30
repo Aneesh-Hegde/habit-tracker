@@ -155,6 +155,9 @@ startButton.addEventListener("click",()=>{
 });
 let time
 finishButton.addEventListener('click',()=>{
+    if(startButton.innerHTML=='Start'){
+        fetch("/");
+    }
     if(startButton.innerHTML=='Continue'){
         clearInterval(breakClock);
         console.log(`hour:${hrsBeforeBreak},minute:${minBeforeBreak},second:${secBeforeBreak}`);
@@ -169,14 +172,15 @@ finishButton.addEventListener('click',()=>{
     
     
     startButton.innerHTML='Start';
-    const id = document.querySelector('.task-id').textContent.trim();
+    const id = window.location.pathname.split('/')[3];
         // Create URL-encoded data
         const urlEncodedData = new URLSearchParams();
         urlEncodedData.append('time', time);
 
         // Send the data using fetch
         const route=window.location.pathname.split('/')[2];
-        fetch(`http://localhost:8080/timer/${route}/${id}`, {
+        console.log(route);
+        fetch(`/timer/${route}/${id}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

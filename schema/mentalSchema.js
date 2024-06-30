@@ -5,10 +5,6 @@ let mentalSchema= new mongoose.Schema({
         type:String,
         required:true,
     },
-    type:{
-        type:String,
-        required:true,
-    },
     target:{
         type:Number,
         required:true,
