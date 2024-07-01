@@ -20,7 +20,7 @@ const session = require("express-session");
 
 
 app.listen(8080, () => {
-    console.log("app is listening on port 8081");
+    console.log("app is listening on port 8089");
 });
 
 app.set("views", path.join(__dirname, "views"));
@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //session parameter
 const store=MongoStore.create({
-    mongoUrl: process.env.ATLASDB_URL,
+    mongoUrl: "mongodb://127.0.0.1:27017/habittracker",
     crypto: {
       secret: process.env.SECRET,
     },
@@ -68,7 +68,7 @@ passport.deserializeUser(User.deserializeUser());
 
 // Connect to MongoDB
 async function main() {
-    await mongoose.connect(process.env.ATLASDB_URL);
+    await mongoose.connect("mongodb://127.0.0.1:27017/habittracker");
 }
 
 main()
@@ -83,14 +83,32 @@ app.get("/", async (req, res) => {
         return res.redirect("/login");
     }
     let user = await User.findById(req.session.user).populate("padai").populate("physical").populate("mental");
+
+    
     if (!user) {
         return res.redirect("/login");
     }
     let padaiTask = user.padai;
     let physicalTask = user.physical;
     let mentalTask = user.mental;
+
+    //creating hour task for seperate tasks
+    let padaiHourTask=[];
+    let physicalHourTask=[];
+    let mentalHourTask=[];
+    for(let i=0;i<user.hourTask.length;i++){
+        if(await Padai.findById(user.hourTask[i].id[0])){
+            let task=await Padai.findById(user.hourTask[i].id[0]);
+            padaiHourTask.push(user.hourTask[i])
+        }else if(await Physical.findById(user.hourTask[i].id[0])){
+            let task=await Physical.findById(user.hourTask[0].id[0]);
+            physicalHourTask.push(user.hourTask[i])
+        }if(await Mental.findById(user.hourTask[i].id[0])){
+            let task=await Mental.findById(user.hourTask[0].id[0]);
+            mentalHourTask.push(user.hourTask[i])
+        }
+    }
     
-    let dataArray = user.hourTask;
 // Get the current date
 let now = new Date();
 
@@ -128,19 +146,39 @@ function groupDatesInRange(dataArray, startDate, endDate) {
 }
 
 // Group the dates within the range
-let datesInRange = groupDatesInRange(dataArray, startDate, endDate);
+let datesInRangeMental = groupDatesInRange(mentalHourTask, startDate, endDate);
+let datesInRangePadai = groupDatesInRange(padaiHourTask, startDate, endDate);
+let datesInRangePhysical = groupDatesInRange(physicalHourTask, startDate, endDate);
+
 // console.log("Grouped dates within the range:", datesInRange);
 // console.log("----------------------")
-let datesOnly = datesInRange.map(entry => entry[0]);
-let timeWorked = [];
-for (let i = 0; i < datesInRange.length; i++) {
-    console.log(datesInRange[i]);
-  let timedone = 0;
-  datesInRange[i][1].forEach(item => timedone += item.time);
-  timeWorked.push(timedone);
+let datesOnlyMental = datesInRangeMental.map(entry => entry[0]);
+let datesOnlyPhysical = datesInRangePadai.map(entry => entry[0]);
+let datesOnlyPadai = datesInRangePhysical.map(entry => entry[0]);
+let allDateInRange=[datesInRangeMental,datesInRangePhysical,datesInRangePadai]
+let padaiTimeWorked = [];
+let physicalTimeWorked = [];
+let mentalTimeWorked = [];
+console.log(datesInRangePadai);
+for(let i=0;i<3;i++){
+    let datesInRange=allDateInRange[i];
+    for (let j = 0; j < datesInRange.length; j++) {
+        console.log(datesInRange[i]);
+      let timedone = 0;
+      datesInRange[j][1].forEach(item => timedone += item.time);
+      if(i==0){
+        mentalTimeWorked.push(timedone);
+      }else if(i==1){
+        physicalTimeWorked.push(timedone);
+      }else if(i==2){
+        padaiTimeWorked.push(timedone);
+      }
+      
+    }
 }
-console.log(timeWorked);
-    res.render("index.ejs", { padaiTask,physicalTask,mentalTask,timeWorked,datesOnly });
+
+// console.log(timeWorked);
+    res.render("index.ejs", { padaiTask,physicalTask,mentalTask,padaiTimeWorked,physicalTimeWorked,mentalTimeWorked,datesOnlyMental,datesOnlyPadai,datesOnlyPhysical });
 });
 
 app.get("/padai", (req, res) => {

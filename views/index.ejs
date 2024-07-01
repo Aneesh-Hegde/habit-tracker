@@ -23,8 +23,12 @@
                 <div class="box mental-box">Mental</div>
                 </div>
                 <div class="charts">
-                        <canvas id="myChart"></canvas>
-                      </div>
+                    <canvas id="physicalMyChart"></canvas>
+                    <br>
+                    <canvas id="padaiMyChart"></canvas>
+                    <br>
+                    <canvas id="mentalMyChart"></canvas>
+                </div>
                 
                 
             </div>
@@ -140,18 +144,88 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
           
     <script>
-        const datesOnly = <%- JSON.stringify(datesOnly) %>;
-        const timeWorked = <%- JSON.stringify(timeWorked) %>;
-      const ctx = document.getElementById('myChart');
+        const datesOnlyPadai = <%- JSON.stringify(datesOnlyPadai) %>;
+        const padaiTimeWorked = <%- JSON.stringify(padaiTimeWorked) %>;
+        const datesOnlyMental = <%- JSON.stringify(datesOnlyMental) %>;
+        const mentalTimeWorked = <%- JSON.stringify(mentalTimeWorked) %>;
+        const datesOnlyPhysical = <%- JSON.stringify(datesOnlyPhysical) %>;
+        const physicalTimeWorked = <%- JSON.stringify(physicalTimeWorked) %>;
+        const physicalCtx = document.getElementById('physicalMyChart');
+        const padaiCtx = document.getElementById('padaiMyChart');
+        const mentalCtx = document.getElementById('mentalMyChart');
     
-      new Chart(ctx, {
+      new Chart(physicalCtx, {
         type: 'bar',
         data: {
-          labels: datesOnly,
+          labels: datesOnlyPhysical,
           datasets: [{
             label: 'Graph',
-            data: timeWorked,
+            data: physicalTimeWorked,
+            borderWidth: 1,
+          }]
+        },
+        options: {
+            plugins: {
+        // changin the lagend colour
+        legend: {
+            labels: {
+                color: "grey",
+            },
+        },
+    },
+          scales: {
+            y: {
+              ticks: { color: "grey", beginAtZero: true },
+
+            },
+            x: {
+              ticks: { color: "grey", beginAtZero: true },
+
+            }
+          }
+          
+        }
+      });
+      new Chart(padaiCtx, {
+        type: 'bar',
+        data: {
+          labels: datesOnlyPadai,
+          datasets: [{
+            label: 'Graph',
+            data: padaiTimeWorked,
             borderWidth: 1
+          }]
+        },
+        options: {
+            plugins: {
+        // changin the lagend colour
+        legend: {
+            labels: {
+                color: "grey",
+            },
+        },
+    },
+          scales: {
+            y: {
+              ticks: { color: "grey", beginAtZero: true },
+
+            },
+            x: {
+              ticks: { color: "grey", beginAtZero: true },
+
+            }
+          }
+          
+        }
+      });
+      new Chart(mentalCtx, {
+        type: 'bar',
+        data: {
+          labels: datesOnlyMental,
+          datasets: [{
+            label: 'Graph',
+            data: mentalTimeWorked,
+            borderWidth: 1,
           }]
         },
         options: {

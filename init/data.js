@@ -6,7 +6,7 @@ const User = require("../schema/user");
 
 mongoose.connect("mongodb://127.0.0.1:27017/habittracker", { useNewUrlParser: true, useUnifiedTopology: true });
 
-const userId = "6681325c257917e761c9214f";
+const userId = "6682c03f0bd4394a3fdcf765";
 
 const generateRandomTasks = async () => {
     const mentalTasks = [];
@@ -43,23 +43,49 @@ const generateRandomTasks = async () => {
         padaiTasks.push(padai);
     }
 
-    // Generate random hour tasks for each day
+    // Generate random hour tasks for each day ensuring at least 5 of each type
     const hourTasks = [];
+    const ensureTasks = (taskArray, count) => {
+        const tasks = [];
+        for (let i = 0; i < count; i++) {
+            tasks.push({
+                id: taskArray[Math.floor(Math.random() * taskArray.length)]._id,
+                time: Math.floor(Math.random() * 60),
+                date: new Date(),
+            });
+        }
+        return tasks;
+    };
+
+    hourTasks.push(...ensureTasks(mentalTasks, 5));
+    hourTasks.push(...ensureTasks(physicalTasks, 5));
+    hourTasks.push(...ensureTasks(padaiTasks, 5));
+
+    // Add more random hour tasks for the rest of the days
     for (let day = 0; day < 30; day++) {
         let date = new Date();
         date.setDate(date.getDate() - day);
 
-        let tasks = [];
-        if (Math.random() < 0.33) tasks.push(mentalTasks[Math.floor(Math.random() * mentalTasks.length)]._id);
-        if (Math.random() < 0.33) tasks.push(physicalTasks[Math.floor(Math.random() * physicalTasks.length)]._id);
-        if (Math.random() < 0.33) tasks.push(padaiTasks[Math.floor(Math.random() * padaiTasks.length)]._id);
-        
-        if (tasks.length > 0) {
-            hourTasks.push({
-                id: tasks[0], // Only take the first task ID
-                time: Math.floor(Math.random() * 60),
-                date: new Date(date.setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60))),
-            });
+        for (let hour = 0; hour < 24; hour++) {
+            if (Math.random() < 0.5) {
+                let taskType = Math.floor(Math.random() * 3); // 0 for mental, 1 for physical, 2 for padai
+                let task;
+                if (taskType === 0) {
+                    task = mentalTasks[Math.floor(Math.random() * mentalTasks.length)];
+                } else if (taskType === 1) {
+                    task = physicalTasks[Math.floor(Math.random() * physicalTasks.length)];
+                } else {
+                    task = padaiTasks[Math.floor(Math.random() * padaiTasks.length)];
+                }
+                
+                if (task) {
+                    hourTasks.push({
+                        id: task._id, // Only take the first task ID
+                        time: Math.floor(Math.random() * 60),
+                        date: new Date(date.setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60))),
+                    });
+                }
+            }
         }
     }
 

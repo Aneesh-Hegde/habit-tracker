@@ -32,11 +32,12 @@
 
 /* Sidebar Wrapper */
 .wrapper {
+    position: absolute;
     display: flex;
     flex-direction: row;
     height: 100vh;
     width: 100%;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
 }
 .left{
@@ -49,13 +50,17 @@
 }
 
 .charts{
-    width: 80rem;
-    height: 80rem;
+    position: absolute;
+    top: 0;
+    left: 25rem;
+    width: 29rem;
+    height: 29rem;
     align-items: center;
     display: flex;
+    flex-direction: column;
 }
 #myChart{
-    padding-right: 5rem;
+    /* padding-right: 5rem; */
 }
 
 /* Box Elements within the Sidebar */
