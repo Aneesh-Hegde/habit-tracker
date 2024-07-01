@@ -33,6 +33,7 @@
 
                 </div>
                 <div class="donuts">
+                    <h2>Today's Task</h2>
                     <canvas id="physicalMyChartDonut"></canvas>
                     <br>
                     <canvas id="padaiMyChartDonut"></canvas>
@@ -368,6 +369,14 @@
                 hoverOffset: 4
             }]
         },
+        options:{
+            plugins:{
+                title: {
+                    display: true,
+                    text: 'Physical',
+                },
+            }
+        },
       })
       new Chart(padaiDonutCtx,{
         type: 'doughnut',
@@ -385,6 +394,14 @@
                 hoverOffset: 4
             }]
         },
+        options:{
+            plugins:{
+                title: {
+                    display: true,
+                    text: 'Study',
+                },
+            }
+        },
       })
       new Chart(mentalDonutCtx,{
         type: 'doughnut',
@@ -401,6 +418,14 @@
                 ],
                 hoverOffset: 4
             }]
+        },
+        options:{
+            plugins:{
+                title: {
+                    display: true,
+                    text: 'Mental',
+                },
+            }
         },
       })
 

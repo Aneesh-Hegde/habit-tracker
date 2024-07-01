@@ -61,7 +61,7 @@
 }
 .donuts{
     position: absolute;
-    top: 0;
+    top: -2rem;
     left: 60rem;
     width: 13rem;
     height: 13rem;
