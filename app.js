@@ -20,7 +20,7 @@ const session = require("express-session");
 
 
 app.listen(8080, () => {
-    console.log("app is listening on port 8089");
+    console.log("app is listening on port 5325");
 });
 
 app.set("views", path.join(__dirname, "views"));
@@ -118,7 +118,6 @@ startDate.setDate(now.getDate() - 30);
 
 // End date is the current date
 let endDate = now;
-
 function groupDatesInRange(dataArray, startDate, endDate) {
   let groupedDates = {};
 
@@ -159,11 +158,9 @@ let allDateInRange=[datesInRangeMental,datesInRangePhysical,datesInRangePadai]
 let padaiTimeWorked = [];
 let physicalTimeWorked = [];
 let mentalTimeWorked = [];
-console.log(datesInRangePadai);
 for(let i=0;i<3;i++){
     let datesInRange=allDateInRange[i];
     for (let j = 0; j < datesInRange.length; j++) {
-        console.log(datesInRange[i]);
       let timedone = 0;
       datesInRange[j][1].forEach(item => timedone += item.time);
       if(i==0){
@@ -176,9 +173,49 @@ for(let i=0;i<3;i++){
       
     }
 }
+for(let i=0;i<3;i++){
+    let datesInRange;
+    if(i==0){
+        datesInRange=datesOnlyMental;
+    }else if(i==1){
+        datesInRange=datesOnlyPhysical;
+    }else if(i==2){
+        datesInRange=datesOnlyPadai;
+    }
+    for (let j = 0; j < datesInRange.length; j++) {
+        let date=datesInRange[j].split('-')[2]+'-'+datesInRange[j].split('-')[1];
+        datesInRange[j]=date;
+      
+    }
+
+}
+//current day task
+let currentDayPadai=[];
+for(let i=0;i<datesInRangePadai[datesInRangePadai.length-1][1].length;i++){
+    if(datesInRangePadai[datesInRangePadai.length-1][1][i]!=undefined){
+        let task=await Padai.find(datesInRangePadai[datesInRangePadai.length-1][1][i].id[0]);
+        currentDayPadai.push(task);
+    }
+    
+}
+let currentDayPhysical=[];
+for(let i=0;i<datesInRangePadai[datesInRangePhysical.length-1][1].length;i++){
+    if(datesInRangePhysical[datesInRangePhysical.length-1][1][i]!=undefined){
+        let task=await Physical.find(datesInRangePhysical[datesInRangePhysical.length-1][1][i].id[0]);
+        currentDayPhysical.push(task);
+    }
+    
+}
+let currentDayMental=[];
+for(let i=0;i<datesInRangePadai[datesInRangeMental.length-1][1].length;i++){
+    if(datesInRangeMental[datesInRangeMental.length-1][1][i]!=undefined){
+        let task=await Padai.find(datesInRangeMental[datesInRangeMental.length-1][1][i].id[0]);
+        currentDayMental.push(task);
+    }
+}
 
 // console.log(timeWorked);
-    res.render("index.ejs", { padaiTask,physicalTask,mentalTask,padaiTimeWorked,physicalTimeWorked,mentalTimeWorked,datesOnlyMental,datesOnlyPadai,datesOnlyPhysical });
+    res.render("index.ejs", { padaiTask,physicalTask,mentalTask,padaiTimeWorked,physicalTimeWorked,mentalTimeWorked,datesOnlyMental,datesOnlyPadai,datesOnlyPhysical,currentDayMental,currentDayPadai,currentDayPhysical });
 });
 
 app.get("/padai", (req, res) => {

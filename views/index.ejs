@@ -19,15 +19,25 @@
             <div class="wrapper">
                 <div class="left">
                     <div class="box physical-box">Physical</div>
-                <div class="box padai-box">Padai</div>
+                <div class="box padai-box">Study</div>
                 <div class="box mental-box">Mental</div>
                 </div>
                 <div class="charts">
                     <canvas id="physicalMyChart"></canvas>
+
                     <br>
                     <canvas id="padaiMyChart"></canvas>
+
                     <br>
                     <canvas id="mentalMyChart"></canvas>
+
+                </div>
+                <div class="donuts">
+                    <canvas id="physicalMyChartDonut"></canvas>
+                    <br>
+                    <canvas id="padaiMyChartDonut"></canvas>
+                    <br>
+                    <canvas id="mentalMyChartDonut"></canvas>
                 </div>
                 
                 
@@ -44,22 +54,27 @@
                     <% for (let task of physicalTask) { %>
                         <% if (task.left >0) { %>
                         <div class="task-wrapper">
-                            <div class="cont-1">
-                                <h3><%= task.task %></h3>
-                                <h2>time left: <%= task.left.toFixed(2) %></h2>
-                          
-                            </div>
-                            <div class="cont-2">
+                            <div class="task">
+                                <div class="cont-1">
+                                    <h3><%= task.task %></h3>
+                                    <h2>time left: <%= task.left.toFixed(2) %></h2>
+                              
+                                </div>
+                                <div class="cont-2">
+                                    
+                                    
+                                        <a href="/timer/physical/<%= task._id %>"><button type="submit" class="do-task">Do Task</button></a> 
+                                       
                                 
-                                
-                                    <a href="/timer/physical/<%= task._id %>"><button type="submit" class="do-task">Do Task</button></a> 
-                                   
-                            
-                                <form action="/physical/<%= task._id %>?_method=DELETE" method="post">
-                                    <button type="submit" class="delete">delete</button>
-                                </form>
+                                    <form action="/physical/<%= task._id %>?_method=DELETE" method="post">
+                                        <button type="submit" class="delete">delete</button>
+                                    </form>
+                                </div>
                             </div>
                             
+                            <div class="task-donut">
+                                <canvas id="<%=task._id%>Donut"></canvas>
+                            </div>
                             
                         </div>
                         <% } %>
@@ -79,20 +94,25 @@
                     <% for (let task of padaiTask) { %>
                         <% if (task.left >0) { %>
                         <div class="task-wrapper">
-                            <div class="cont-1">
-                                <h3><%= task.task %></h3>
-                                <h2>time left: <%= task.left.toFixed(2) %></h2>
-                          
+                            <div class="task">
+                                <div class="cont-1">
+                                    <h3><%= task.task %></h3>
+                                    <h2>time left: <%= task.left.toFixed(2) %></h2>
+                              
+                                </div>
+                                <div class="cont-2">
+    
+                                    
+                                        <a href="/timer/padai/<%= task._id %>"><button type="submit" class="do-task">Do Task</button></a> 
+                                       
+    
+                                    <form action="/padai/<%= task._id %>?_method=DELETE" method="post">
+                                        <button type="submit" class="delete">delete</button>
+                                    </form>
+                                </div>
                             </div>
-                            <div class="cont-2">
-
-                                
-                                    <a href="/timer/padai/<%= task._id %>"><button type="submit" class="do-task">Do Task</button></a> 
-                                   
-
-                                <form action="/padai/<%= task._id %>?_method=DELETE" method="post">
-                                    <button type="submit" class="delete">delete</button>
-                                </form>
+                            <div class="task-donut">
+                                <canvas id="<%=task._id%>Donut"></canvas>
                             </div>
                             
                         </div>
@@ -113,17 +133,23 @@
                     <% for (let task of mentalTask) { %>
                         <% if (task.left >0) { %>
                         <div class="task-wrapper">
-                            
-                            <div class="cont-1">
-                                <h3><%= task.task %></h3>
-                                <h2>time left: <%= task.left.toFixed(2) %></h2>
-                          
+                            <div class="task">
+                                <div class="cont-1">
+                                    <h3><%= task.task %></h3>
+                                    <h2>time left: <%= task.left.toFixed(2) %></h2>
+                              
+                                </div>
+                                <div class="cont-2">
+                                    <a href="/timer/mental/<%= task._id %>"><button type="submit" class="do-task">Do Task</button></a> 
+                                    <form action="/mental/<%= task._id %>?_method=DELETE" method="post">
+                                        <button type="submit" class="delete">delete</button>
+                                    </form>
+                                </div>
                             </div>
-                            <div class="cont-2">
-                                <a href="/timer/mental/<%= task._id %>"><button type="submit" class="do-task">Do Task</button></a> 
-                                <form action="/mental/<%= task._id %>?_method=DELETE" method="post">
-                                    <button type="submit" class="delete">delete</button>
-                                </form>
+                            
+
+                            <div class="task-donut">
+                                <canvas id="<%=task._id%>Donut"></canvas>
                             </div>
                             
                         </div>
@@ -150,13 +176,45 @@
         const mentalTimeWorked = <%- JSON.stringify(mentalTimeWorked) %>;
         const datesOnlyPhysical = <%- JSON.stringify(datesOnlyPhysical) %>;
         const physicalTimeWorked = <%- JSON.stringify(physicalTimeWorked) %>;
+        const currentDayMental=<%- JSON.stringify(currentDayMental) %>;
+        const currentDayPadai=<%- JSON.stringify(currentDayPadai) %>;
+        const currentDayPhysical=<%- JSON.stringify(currentDayPhysical) %>;
+        const physicalTask=<%- JSON.stringify(physicalTask) %>;
+        const padaiTask=<%- JSON.stringify(padaiTask) %>;
+        const mentalTask=<%- JSON.stringify(mentalTask) %>;
+
         const physicalCtx = document.getElementById('physicalMyChart');
         const padaiCtx = document.getElementById('padaiMyChart');
         const mentalCtx = document.getElementById('mentalMyChart');
-    
+        const physicalDonutCtx = document.getElementById('physicalMyChartDonut');
+        const padaiDonutCtx = document.getElementById('padaiMyChartDonut');
+        const mentalDonutCtx = document.getElementById('mentalMyChartDonut');
+        let completedPhysical=0;
+        let completedPadai=0;
+        let completedMental=0;
+        console.log(currentDayPadai);
+        console.log("------------------");
+        console.log(currentDayMental);
+        for(let i=0;i<currentDayMental.length;i++){
+            if(currentDayMental[i][0]){
+                if(currentDayMental[i][0].left==0) completedMental+=1
+            };
+        }
+        for(let i=0;i<currentDayPadai.length;i++){
+            if(currentDayPadai[i][0]){
+                if(currentDayPadai[i][0].left==0) completedPadai+=1;
+            }
+        }
+        for(let i=0;i<currentDayPhysical.length;i++){
+            if(currentDayPhysical[i][0].left==0) completedPhysical+=1;
+        }
+        let incompletedPhysical=currentDayPhysical.length-completedPhysical;
+        let incompletedPadai=currentDayPadai.length-completedPadai;
+        let incompletedMental=currentDayMental.length-completedMental;
       new Chart(physicalCtx, {
         type: 'bar',
         data: {
+
           labels: datesOnlyPhysical,
           datasets: [{
             label: 'Graph',
@@ -171,15 +229,30 @@
             labels: {
                 color: "grey",
             },
+            
         },
+        title: {
+        display: true,
+        text: 'Physical',
+      },
     },
           scales: {
             y: {
               ticks: { color: "grey", beginAtZero: true },
+              title: {
+                            display: true,
+                            text: 'Minutes' // Name of x-axis
+                        },
+                        beginAtZero: true
 
             },
             x: {
               ticks: { color: "grey", beginAtZero: true },
+              title: {
+                            display: true,
+                            text: 'Dates' // Name of x-axis
+                        },
+                        beginAtZero: true
 
             }
           }
@@ -204,14 +277,28 @@
                 color: "grey",
             },
         },
+        title: {
+        display: true,
+        text: 'Study',
+      },
     },
           scales: {
-            y: {
+           y: {
               ticks: { color: "grey", beginAtZero: true },
+              title: {
+                            display: true,
+                            text: 'Minutes' // Name of x-axis
+                        },
+                        beginAtZero: true
 
             },
             x: {
               ticks: { color: "grey", beginAtZero: true },
+              title: {
+                            display: true,
+                            text: 'Dates' // Name of x-axis
+                        },
+                        beginAtZero: true
 
             }
           }
@@ -236,20 +323,155 @@
                 color: "grey",
             },
         },
+        title: {
+        display: true,
+        text: 'Mental',
+      },
     },
           scales: {
             y: {
               ticks: { color: "grey", beginAtZero: true },
+              title: {
+                            display: true,
+                            text: 'Minutes' // Name of x-axis
+                        },
+                        beginAtZero: true
 
             },
             x: {
               ticks: { color: "grey", beginAtZero: true },
+              title: {
+                            display: true,
+                            text: 'Dates' // Name of x-axis
+                        },
+                        beginAtZero: true
 
             }
           }
           
         }
       });
+      //donuts
+      new Chart(physicalDonutCtx,{
+        type: 'doughnut',
+        data: {
+            labels: [
+                'Completed',
+                'Incompleted',
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [completedPhysical,incompletedPhysical],
+                backgroundColor: [
+                'hsl(100, 100%, 60%)', '#777',
+                ],
+                hoverOffset: 4
+            }]
+        },
+      })
+      new Chart(padaiDonutCtx,{
+        type: 'doughnut',
+        data: {
+            labels: [
+                'Completed',
+                'Incompleted',
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [completedPadai,incompletedPadai],
+                backgroundColor: [
+                'hsl(100, 100%, 60%)', '#777',
+                ],
+                hoverOffset: 4
+            }]
+        },
+      })
+      new Chart(mentalDonutCtx,{
+        type: 'doughnut',
+        data: {
+            labels: [
+                'Completed',
+                'Incompleted',
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [completedMental,incompletedMental],
+                backgroundColor: [
+                'hsl(100, 100%, 60%)', '#777',
+                ],
+                hoverOffset: 4
+            }]
+        },
+      })
+
+      //task donut
+      for(let task of physicalTask){
+        if(task.left==0) continue;
+        let taskCtx=`${task._id}Donut`
+        new Chart(taskCtx,{
+        type: 'doughnut',
+        data: {
+            labels: [
+                'Completed',
+                'Incompleted',
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [task.target-task.left,task.left],
+                backgroundColor: [
+                'hsl(100, 100%, 60%)', '#777',
+                ],
+                hoverOffset: 4
+            }]
+        },
+      })
+      }
+
+      for(let task of padaiTask){
+        if(task.left==0) continue;
+        console.log(task);
+        let taskCtx=`${task._id}Donut`
+        new Chart(taskCtx,{
+        type: 'doughnut',
+        data: {
+            labels: [
+                'Completed',
+                'Incompleted',
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [task.target-task.left,task.left],
+                backgroundColor: [
+                'hsl(100, 100%, 60%)', '#777',
+                ],
+                hoverOffset: 4
+            }]
+        },
+      })
+      }
+
+      for(let task of mentalTask){
+        if(task.left==0) continue;
+        // console.log(task);
+        let taskCtx=`${task._id}Donut`
+        new Chart(taskCtx,{
+        type: 'doughnut',
+        data: {
+            labels: [
+                'Completed',
+                'Incompleted',
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [task.target-task.left,task.left],
+                backgroundColor: [
+                'hsl(100, 100%, 60%)', '#777',
+                ],
+                hoverOffset: 4
+            }]
+        },
+      })
+      }
     </script>
 </body>
 </html>

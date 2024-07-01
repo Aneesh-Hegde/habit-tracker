@@ -18,7 +18,7 @@
 .home-page {
     position: absolute;
     z-index: 20;
-    background: linear-gradient(120deg, #f6d365 0%, #fda085 100%); /* Gradient background */
+    background-color: beige;
     height: 100vh;
     width: 100%;
     left: 0;
@@ -59,16 +59,28 @@
     display: flex;
     flex-direction: column;
 }
-#myChart{
-    /* padding-right: 5rem; */
+.donuts{
+    position: absolute;
+    top: 0;
+    left: 60rem;
+    width: 13rem;
+    height: 13rem;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
+
+.task-donut{
+    width: 13rem;
+    height: 13rem;
+}
+
 
 /* Box Elements within the Sidebar */
 .box {
     width: 8rem;
     height: 8rem;
-    background-color: beige;
-
+    background: linear-gradient(120deg, #f6d365 0%, #fda085 100%); /* Gradient background */
     border-radius: 8px; /* Rounded corners */
     display: flex;
     justify-content: center;
@@ -116,6 +128,8 @@
     height: 100vh;
     width: 100%;
     transition: all ease 1s;
+    overflow: scroll;
+
 }
 .back-button-div{
     height: 5rem;
@@ -175,7 +189,7 @@ body.dark-mode {
 }
 
 .dark-mode .box {
-    background-color: #800080;
+    background: linear-gradient(120deg, #800080 0%, #800080 100%);
     color: white;
 }
 
@@ -286,8 +300,13 @@ body.dark-mode {
 }
 
 
-
-.task-wrapper {
+.task-wrapper{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    justify-content: space-around;
+}
+.task {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -305,13 +324,13 @@ body.dark-mode {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.task-wrapper .cont-1{
+.task .cont-1{
     height: 54%;
     width: 100%;
     text-align: center;
 }
 
-.task-wrapper .cont-2{
+.task .cont-2{
     margin-top: 24px;
     width: 75%;
     justify-content: space-around;
@@ -324,7 +343,7 @@ body.dark-mode {
     scale: 1.25;
 }
 
-.dark-mode .task-wrapper {
+.dark-mode .task {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -339,7 +358,7 @@ body.dark-mode {
     height: 270px;
 }
 
-.dark-mode .task-wrapper .cont-2{
+.dark-mode .task .cont-2{
     margin-top: 24px;
     width: 100%;
     justify-content: space-around;
@@ -348,14 +367,14 @@ body.dark-mode {
     flex-direction: row;
 }
 
-.task-wrapper h3 {
+.task h3 {
     margin-top: 29px;
     text-transform: capitalize;
     font-size: 20px;
     color: #333;
 }
 
-.task-wrapper h2 {
+.task h2 {
     margin-top: 13px;
     font-size: 18px;
     color: #666;

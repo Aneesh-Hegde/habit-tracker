@@ -6,38 +6,80 @@ const User = require("../schema/user");
 
 mongoose.connect("mongodb://127.0.0.1:27017/habittracker", { useNewUrlParser: true, useUnifiedTopology: true });
 
-const userId = "6682c03f0bd4394a3fdcf765";
+const userId = "6683103dc9c80a8bc520a227";
 
 const generateRandomTasks = async () => {
     const mentalTasks = [];
     const physicalTasks = [];
     const padaiTasks = [];
 
-    // Create sample tasks for mental, physical, and padai
+    // Create sample tasks for mental, physical, and padai with left < target and left > 0
     for (let i = 0; i < 30; i++) {
+        let target = Math.floor(Math.random() * 100) + 1;
+        let left = Math.floor(Math.random() * target);
+        if (left === 0) left = 1;
+
         let mental = new Mental({
             task: `Mental Task ${i + 1}`,
             type: "Mental",
+            target: target,
+            left: left,
+        });
+        await mental.save();
+        mentalTasks.push(mental);
+
+        target = Math.floor(Math.random() * 100) + 1;
+        left = Math.floor(Math.random() * target);
+        if (left === 0) left = 1;
+
+        let physical = new Physical({
+            task: `Physical Task ${i + 1}`,
+            type: "Physical",
+            target: target,
+            left: left,
+        });
+        await physical.save();
+        physicalTasks.push(physical);
+
+        target = Math.floor(Math.random() * 100) + 1;
+        left = Math.floor(Math.random() * target);
+        if (left === 0) left = 1;
+
+        let padai = new Padai({
+            task: `Padai Task ${i + 1}`,
+            type: "Padai",
+            target: target,
+            left: left,
+        });
+        await padai.save();
+        padaiTasks.push(padai);
+    }
+
+    // Create tasks with left = 0 for the current date
+    for (let i = 0; i < 3; i++) {
+        let mental = new Mental({
+            task: `Current Date Mental Task ${i + 1}`,
+            type: "Mental",
             target: Math.floor(Math.random() * 100) + 1,
-            left: Math.floor(Math.random() * 100) + 1,
+            left: 0,
         });
         await mental.save();
         mentalTasks.push(mental);
 
         let physical = new Physical({
-            task: `Physical Task ${i + 1}`,
+            task: `Current Date Physical Task ${i + 1}`,
             type: "Physical",
             target: Math.floor(Math.random() * 100) + 1,
-            left: Math.floor(Math.random() * 100) + 1,
+            left: 0,
         });
         await physical.save();
         physicalTasks.push(physical);
 
         let padai = new Padai({
-            task: `Padai Task ${i + 1}`,
+            task: `Current Date Padai Task ${i + 1}`,
             type: "Padai",
             target: Math.floor(Math.random() * 100) + 1,
-            left: Math.floor(Math.random() * 100) + 1,
+            left: 0,
         });
         await padai.save();
         padaiTasks.push(padai);
@@ -77,7 +119,7 @@ const generateRandomTasks = async () => {
                 } else {
                     task = padaiTasks[Math.floor(Math.random() * padaiTasks.length)];
                 }
-                
+
                 if (task) {
                     hourTasks.push({
                         id: task._id, // Only take the first task ID
