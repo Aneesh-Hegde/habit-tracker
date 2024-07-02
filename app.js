@@ -231,6 +231,7 @@ app.post("/padai", async(req, res) => {
     await newTask.save();
     let user=await User.findById(req.session.user);
     user.padai.push(newTask);
+    user.hourTask.push({id:[newTask],time:0,date:new Date()});
     await User.findByIdAndUpdate(req.session.user,user)
     res.redirect("/");
 });
@@ -281,6 +282,8 @@ app.post("/physical", async(req, res) => {
     await newTask.save();
     let user=await User.findById(req.session.user);
     user.physical.push(newTask);
+    user.padai.push(newTask);
+    user.hourTask.push({id:[newTask],time:0,date:new Date()});
     await User.findByIdAndUpdate(req.session.user,user)
     res.redirect("/");
 });
@@ -331,6 +334,8 @@ app.post("/mental", async(req, res) => {
     await newTask.save();
     let user=await User.findById(req.session.user);
     user.mental.push(newTask);
+    user.padai.push(newTask);
+    user.hourTask.push({id:[newTask],time:0,date:new Date()});
     await User.findByIdAndUpdate(req.session.user,user)
     res.redirect("/");
 });

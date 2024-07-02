@@ -6,7 +6,7 @@ const User = require("../schema/user");
 
 mongoose.connect("mongodb://127.0.0.1:27017/habittracker", { useNewUrlParser: true, useUnifiedTopology: true });
 
-const userId = "6683103dc9c80a8bc520a227";
+const userId = "66835d9ef97112ea4a35191a";
 
 const generateRandomTasks = async () => {
     const mentalTasks = [];

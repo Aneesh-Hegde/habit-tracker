@@ -193,9 +193,6 @@
         let completedPhysical=0;
         let completedPadai=0;
         let completedMental=0;
-        console.log(currentDayPadai);
-        console.log("------------------");
-        console.log(currentDayMental);
         for(let i=0;i<currentDayMental.length;i++){
             if(currentDayMental[i][0]){
                 if(currentDayMental[i][0].left==0) completedMental+=1
@@ -206,6 +203,7 @@
                 if(currentDayPadai[i][0].left==0) completedPadai+=1;
             }
         }
+        console.log(currentDayPhysical);
         for(let i=0;i<currentDayPhysical.length;i++){
             if(currentDayPhysical[i][0].left==0) completedPhysical+=1;
         }
@@ -356,6 +354,7 @@
         }
       });
       //donuts
+      console.log(completedPhysical,incompletedPhysical)
       new Chart(physicalDonutCtx,{
         type: 'doughnut',
         data: {
@@ -457,7 +456,6 @@
 
       for(let task of padaiTask){
         if(task.left==0) continue;
-        console.log(task);
         let taskCtx=`${task._id}Donut`
         new Chart(taskCtx,{
         type: 'doughnut',
@@ -480,7 +478,6 @@
 
       for(let task of mentalTask){
         if(task.left==0) continue;
-        // console.log(task);
         let taskCtx=`${task._id}Donut`
         new Chart(taskCtx,{
         type: 'doughnut',
