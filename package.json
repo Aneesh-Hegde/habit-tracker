@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "20.x"
+    "node": "22.3.0"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
@@ -22,8 +22,5 @@
   "devDependencies": {
     "vercel": "^34.3.0"
   },
-  "scripts": {
-    "start": "node app.js"
-  }
-  
+  "start": "node app.js"
 }
