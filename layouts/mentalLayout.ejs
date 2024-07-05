@@ -1,0 +1,35 @@
+<div class="back-button-div">
+    <button class="back-button">Back</button>
+</div>
+<a href="/mental"><button class="add-task">Add task</button></a>
+<% try { %>
+    <% if (Array.isArray(mentalTask) && mentalTask.length > 0) { %>
+        <% for (let task of mentalTask) { %>
+            <% if (task.left >0) { %>
+            <div class="task-wrapper">
+                <div class="task">
+                    <div class="cont-1">
+                        <h3><%= task.task %></h3>
+                        <h2>time left: <%= task.left.toFixed(2) %></h2>
+                  
+                    </div>
+                    <div class="cont-2">
+                        <a href="/mental/timer/<%= task._id %>"><button type="submit" class="do-task">Do Task</button></a> 
+                        <form action="/mental/<%= task._id %>?_method=DELETE" method="post">
+                            <button type="submit" class="delete">delete</button>
+                        </form>
+                    </div>
+                </div>
+                
+
+                <div class="task-donut">
+                    <canvas id="<%=task._id%>Donut"></canvas>
+                </div>
+                
+            </div>
+            <% } %>
+        <% } %>
+    <% } %>
+<% } catch (error) { %>
+    <h1>Error: <%= error.message %></h1>
+<% } %>

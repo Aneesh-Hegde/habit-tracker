@@ -178,9 +178,9 @@ finishButton.addEventListener('click',()=>{
         urlEncodedData.append('time', time);
 
         // Send the data using fetch
-        const route=window.location.pathname.split('/')[2];
+        const route=window.location.pathname.split('/')[1];
         console.log(route);
-        fetch(`/timer/${route}/${id}`, {
+        fetch(`/${route}/timer/${id}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
