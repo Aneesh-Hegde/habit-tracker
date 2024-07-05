@@ -21,6 +21,5 @@
   },
   "devDependencies": {
     "vercel": "^34.3.0"
-  },
-  "start": "node app.js"
+  }
 }
