@@ -1,7 +1,5 @@
 {
-  "engines": {
-    "node": "22.3.0"
-  },
+  
   "dependencies": {
     "body-parser": "^1.20.2",
     "chart.js": "^4.4.3",
