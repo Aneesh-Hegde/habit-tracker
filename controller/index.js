@@ -22,7 +22,7 @@ module.exports.indexController = async (req, res) => {
   padaiHourTask = alltask.padaiHourTask;
   physicalHourTask = alltask.physicalHourTask;
   mentalHourTask = alltask.mentalHourTask;
-  console.log(alltask);
+  //console.log(alltask);
 
   // Get the current date
   let now = new Date();
@@ -36,13 +36,16 @@ module.exports.indexController = async (req, res) => {
   let endDate = now;
 
   // Group the dates within the range
-  let datesInRangeMental = groupDatesInRange(
+  let datesInRangeMental = []
+  datesInRangeMental=groupDatesInRange(
     mentalHourTask,
     startDate,
     endDate
   );
-  let datesInRangePadai = groupDatesInRange(padaiHourTask, startDate, endDate);
-  let datesInRangePhysical = groupDatesInRange(
+  let datesInRangePadai = []
+  datesInRangePadai=groupDatesInRange(padaiHourTask, startDate, endDate);
+  let datesInRangePhysical = []
+  datesInRangePhysical=groupDatesInRange(
     physicalHourTask,
     startDate,
     endDate
@@ -51,9 +54,12 @@ module.exports.indexController = async (req, res) => {
   // console.log("Grouped dates within the range:", datesInRange);
   // console.log("----------------------")
   //stores date for x axis in graph
-  let datesOnlyMental = datesInRangeMental.map((entry) => entry[0]);
-  let datesOnlyPhysical = datesInRangePadai.map((entry) => entry[0]);
-  let datesOnlyPadai = datesInRangePhysical.map((entry) => entry[0]);
+  let datesOnlyMental = []
+  datesOnlyMental=datesInRangeMental.map((entry) => entry[0]);
+  let datesOnlyPhysical = []
+  datesOnlyPhysical=datesInRangePhysical.map((entry) => entry[0]);
+  let datesOnlyPadai = []
+  datesOnlyPadai=datesInRangePadai.map((entry) => entry[0]);
   let allDateInRange = [
     datesInRangeMental,
     datesInRangePhysical,
@@ -68,7 +74,11 @@ module.exports.indexController = async (req, res) => {
     let datesInRange = allDateInRange[i];
     for (let j = 0; j < datesInRange.length; j++) {
       let timedone = 0;
-      datesInRange[j][1].forEach((item) => (timedone += item.time));
+      if (Array.isArray(datesInRange[j][1])) {
+        datesInRange[j][1].forEach((item) => {
+            timedone += item.time; // Sum up the time values
+        });
+    }
       if (i == 0) {
         mentalTimeWorked.push(timedone);
       } else if (i == 1) {
@@ -118,7 +128,7 @@ module.exports.indexController = async (req, res) => {
   let checkPhysicalId = [];
   for (
     let i = 0;
-    i < datesInRangePadai[datesInRangePhysical.length - 1][1].length;
+    i < datesInRangePhysical[datesInRangePhysical.length - 1][1].length;
     i++
   ) {
     if (
@@ -168,4 +178,4 @@ module.exports.indexController = async (req, res) => {
     currentDayPhysical,
   });
 };
-module.exports.indexController;
+
